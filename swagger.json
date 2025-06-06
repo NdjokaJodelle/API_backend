@@ -1,0 +1,186 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de gestion des contacts",
+    "version": "1.0.0",
+    "description": "Une API simple pour créer, lire, mettre à jour et supprimer des contacts."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "summary": "Lister tous les contacts",
+        "responses": {
+          "200": {
+            "description": "Liste des contacts récupérée avec succès"
+          }
+        }
+      },
+      "post": {
+        "summary": "Créer un nouveau contact",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "email": { "type": "string" },
+                  "telephone": { "type": "string" }
+                },
+                "required": ["nom", "email", "telephone"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contact créé avec succès"
+          },
+          "400": {
+            "description": "Requête invalide"
+          }
+        }
+      }
+    },
+    "/contacts/search": {
+  "get": {
+    "summary": "Rechercher un contact par nom",
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Nom ou partie du nom du contact à rechercher",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Résultats de la recherche",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Requête invalide"
+      }
+    }
+  }
+},
+    "/contacts/{id}": {
+      "get": {
+        "summary": "Obtenir un contact par ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact trouvé"
+          },
+          "404": {
+            "description": "Contact non trouvé"
+          }
+        }
+      },
+      "put": {
+        "summary": "Mettre à jour un contact par ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "email": { "type": "string" },
+                  "telephone": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact mis à jour"
+          },
+          "404": {
+            "description": "Contact non trouvé"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Supprimer un contact par ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact supprimé"
+          },
+          "404": {
+            "description": "Contact non trouvé"
+          }
+        }
+      }
+    }
+  },
+  
+  "components": {
+  "schemas": {
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "nom": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
+
+}
