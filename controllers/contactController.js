@@ -35,7 +35,7 @@ exports.createContact = async (req, res) => {
 // PUT /contacts/:id
 exports.updateContact = async (req, res) => {
   try {
-    const updated = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!updated) return res.status(404).json({ message: 'Contact non trouvé' });
     res.json(updated);
   } catch (err) {
